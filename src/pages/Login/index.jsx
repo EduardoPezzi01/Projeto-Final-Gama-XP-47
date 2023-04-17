@@ -19,29 +19,28 @@ import { LogHeader } from "../Home/styles"
 
 
 const Login = () => {
+
   const [emailUser, setEmailUser] = useState('')
   const [passwordUser, setPasswordUser] = useState('')
   const navigate = useNavigate()
 
-  function handleSubmitLogin(event) {
+  const handleSubmitLogin = (event) => {
     event.preventDefault()
-    
-    if (emailUser.length === 0 || passwordUser.length === 0) {
-      alert('Digite seu usuário e senha!')
-    } else {
-      const loginData = { email: emailUser, password: passwordUser }
-      axios.post('https://api-ecommerce-gamaxp47.herokuapp.com/login', loginData)
-        .then(response => {
-          localStorage.setItem('token', response.data.token)
-          localStorage.setItem('user', response.data.nome)
-          localStorage.setItem('userType', response.data.tipo)
-          navigate('/')
-        })
-        .catch(error => {
-          alert(error.response.data.message)
-        })
-    }
+
+    const loginData = { email: emailUser, senha: passwordUser }
+
+    axios.post('https://api-ecommerce-gamaxp47.herokuapp.com/login', loginData)
+      .then(response => {
+        localStorage.setItem('token', response.data.token)
+        localStorage.setItem('user', response.data.nome)
+        localStorage.setItem('userType', response.data.tipo)
+        navigate('/')
+      })
+      .catch(error => {
+        console.error('Ocorreu um erro ao fazer login:', error)
+      })
   }
+  
 
   return (
 
